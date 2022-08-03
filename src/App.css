@@ -38,8 +38,8 @@
 }
 
 svg.moveface {
-  height: 1000px;
-  width: 1000px;
+  height: 750px;
+  width: 750px;
 }
 .skin {
   fill: #5ed2d4
@@ -74,7 +74,4 @@ svg.moveface {
   stroke: #111122;
   stroke-width: 10px;
   fill: #d43991;
-}
-.parts {
-  transform:translate(40px, 20px);
 }
