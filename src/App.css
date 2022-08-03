@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+
+svg.moveface {
+  height: 1000px;
+  width: 1000px;
+}
+.skin {
+  fill: #5ed2d4
+}
+.eyebrow {
+  stroke: #111122;
+  stroke-width: 10px;
+  fill: none;
+}
+.eyelid {
+  stroke:#111122;
+  stroke-width: 10px;
+  fill: #1ba4a6;
+}
+.eyehighlight {
+  fill: #ffffff
+}
+.whiteeye {
+  stroke: #111122;
+  stroke-width: 10px;
+  fill: #efefef
+}
+.blackeye {
+  fill: #111122
+}
+.nose {
+  stroke: #7b104d;
+  stroke-width: 10px;
+  fill: #dc65b8
+}
+.mouth {
+  stroke: #111122;
+  stroke-width: 10px;
+  fill: #d43991;
+}
+.parts {
+  transform:translate(40px, 20px);
+}
