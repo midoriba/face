@@ -52,11 +52,46 @@ function FaceContainer() {
 }
 
 function Face(props) {
+  const frontarg = () => {
+    let x = props.faceparameter.xturn
+    let y = props.faceparameter.yturn
+    let arg = 0
+    if(x === 0 && y === 0) {
+      return 0
+    }
+    else if(x === 0 && y > 0) {
+      return Math.PI / 2
+    }
+    else if(x === 0 && y < 0) {
+      return -Math.PI / 2
+    }
+    else {
+      arg = Math.atan(y/x)
+    }
+    if(x < 0 && y >= 0) {
+      return Math.PI + arg
+    }
+    else if(x < 0 && y < 0) {
+      return -Math.PI + arg
+    }
+    else {
+      return arg
+    }
+  }
   const eyelidcalc = ({sweep_flag, ry}) => {
     return `100 ${ry} 0 0 ${sweep_flag}`
   }
-  const xturncalc = (xturn) => {
+  const collapsecalc = () => {
+    let x = props.faceparameter.x
+    let y = props.faceparameter.y
+    return 1 - (Math.sqrt(x*x + y*y) * 0.15 / 100)
+  }
+  const eyecenterxcalc = () => {
+    return xturntranscalc
+  }
+  const xturncalc = () => {
     let retx = 1
+    let xturn = props.faceparameter.xturn
     if(xturn > 0) {
       retx = 1 - (xturn * 0.15 / 100) 
     }
@@ -65,8 +100,9 @@ function Face(props) {
     }
     return retx
   }
-  const yturncalc = (yturn) => {
+  const yturncalc = () => {
     let rety = 1
+    let yturn = props.faceparameter.yturn
     if(yturn > 0) {
       rety = 1 - (yturn * 0.15 / 100) 
     }
@@ -75,8 +111,9 @@ function Face(props) {
     }
     return rety
   }
-  const xturntranscalc = (xturn) => {
+  const xturntranscalc = () => {
     let retx = 0
+    let xturn = props.faceparameter.xturn
     if(xturn > 0) {
       retx = (xturn * 112.5 / 100) + xturn * 50 / 100 
     }
@@ -85,8 +122,9 @@ function Face(props) {
     }
     return retx
   }
-  const yturntranscalc = (yturn) => {
+  const yturntranscalc = () => {
     let rety = 0
+    let yturn = props.faceparameter.yturn
     if(yturn > 0) {
       rety = (yturn * 112.5 / 100) + yturn * 50 / 100
     }
@@ -95,23 +133,27 @@ function Face(props) {
     }
     return rety
   }
-  const nosexturntranscalc = (xturn) => {
+  const nosexturntranscalc = () => {
     let retx = 0
+    let xturn = props.faceparameter.xturn
     retx =  xturn * 50 / 100 
     return retx
   }
-  const noseyturntranscalc = (yturn) => {
+  const noseyturntranscalc = () => {
     let rety = 0
+    let yturn = props.faceparameter.yturn
     rety =  yturn * 50 / 100 
     return rety
   }
-  const eyebrowxturntranscalc = (xturn) => {
+  const eyebrowxturntranscalc = () => {
     let retx = 0
+    let xturn = props.faceparameter.xturn
     retx =  xturn * 20 / 100 
     return retx
   }
-  const eyebrowyturntranscalc = (yturn) => {
+  const eyebrowyturntranscalc = () => {
     let rety = 0
+    let yturn = props.faceparameter.yturn
     rety =  yturn * 20 / 100 
     return rety
   }
@@ -119,20 +161,20 @@ function Face(props) {
     <div>
     <svg className="moveface">
       <rect className="skin" cx="0" cy="0" width="1000px" height="1000"/>
-      <g className="parts" transform={"translate("+xturntranscalc(props.faceparameter.xturn)+" "+yturntranscalc(props.faceparameter.yturn)+")" + "scale("+xturncalc(props.faceparameter.xturn)+" "+yturncalc(props.faceparameter.yturn)+")" }>
-          <path className="eyebrow lefteye" d="M 100 130 Q 200 100 300 130" transform={"translate("+eyebrowxturntranscalc(props.faceparameter.xturn)+" "+eyebrowyturntranscalc(props.faceparameter.yturn)+")"}/>
-          <path className="eyebrow righteye" d="M 450 130 Q 550 100 650 130" transform={"translate("+eyebrowxturntranscalc(props.faceparameter.xturn)+" "+eyebrowyturntranscalc(props.faceparameter.yturn)+")"}/>
-          <circle className="whiteeye lefteye" cx="200" cy="300" r="100"/>
+      <g className="parts" transform={"translate("+xturntranscalc()+" "+yturntranscalc()+")" + "scale("+xturncalc()+" "+yturncalc()+")" }>
+          <path className="eyebrow lefteye" d="M 100 130 Q 200 100 300 130" transform={"translate("+eyebrowxturntranscalc()+" "+eyebrowyturntranscalc()+")"}/>
+          <path className="eyebrow righteye" d="M 450 130 Q 550 100 650 130" transform={"translate("+eyebrowxturntranscalc()+" "+eyebrowyturntranscalc()+")"}/>
+          <circle className="whiteeye lefteye" cx="200" cy="300" r="100" transform={"rotate("+frontarg()+" "+200+xturntranscalc()+" "+300+yturntranscalc}/>
           <circle className="whiteeye righteye" cx="550" cy="300" r="100"/>
           <circle className="iris lefteye" cx="200" cy="300" r="50"/>
           <circle className="iris righteye" cx="550" cy="300" r="50"/>
           <path className="eyelid lefteye" d={`M 100 300 A 100 100 0 1 1 300 300 A ${eyelidcalc(props.faceparameter.eyelidturn)} 100 300`}/>
           <path className="eyelid righteye" d={`M 450 300 A 100 100 0 1 1 650 300 A ${eyelidcalc(props.faceparameter.eyelidturn)} 450 300`}/>
-          <ellipse className="nose center" cx="375" cy="430" rx="65" ry="55" transform={"translate("+nosexturntranscalc(props.faceparameter.xturn)+" "+noseyturntranscalc(props.faceparameter.yturn)+")"}/>
+          <ellipse className="nose center" cx="375" cy="430" rx="65" ry="55" transform={"translate("+nosexturntranscalc()+" "+noseyturntranscalc()+")"}/>
           <path className="mouth center" d="M 280 550 C 310 600 440 600 470 550 C 440 570 310 570 280 550" />
       </g>
     </svg>
-    <p>({props.faceparameter.xturn},{props.faceparameter.yturn})</p>
+    <p>({props.faceparameter.xturn},{props.faceparameter.yturn}), {frontarg()}</p>
     </div>
   )
 }
