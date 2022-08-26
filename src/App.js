@@ -25,18 +25,23 @@ function FaceContainer() {
     mouthup:0,
     mouthlow:0,
   })
-  
   // stateにパラメータを追加
+
   const setfixedparameter = (name, value) => {
     setFaceparameter({ ...faceparameter, [name]: value })
   }
+  const addtoparameter = (name, n) => {
+    setFaceparameter({ ...faceparameter, [name]: faceparameter[name]+n})
+  }
   return (
     <div className="FaceContainer">
+      {faceparameter.yturn}
       <Face faceparameter={faceparameter}/>
-      <FaceController setfixedparameter={setfixedparameter}/>
+      <FaceMover setfixedparameter={setfixedparameter} faceparameter={faceparameter} addtoparameter={addtoparameter} setFaceparameter={setFaceparameter}/>
     </div>
   )
 }
+      //<FaceController setfixedparameter={setfixedparameter}/>
 
 function Face(props) {
   const eyelidcalc = ({sweep_flag, ry}) => {
@@ -177,7 +182,7 @@ function Face(props) {
     let inedge = [300, 130+maxtrans*inparam/100]
     let center = [200, 100+maxtrans*ceparam/100]
     //console.log(`M ${exedge[0]} ${exedge[1]} Q ${center[0]} ${center[1]} ${inedge[0]} ${inedge[1]}`)
-    console.log(props.faceparameter)
+    //console.log(props.faceparameter)
     return `M ${exedge[0]} ${exedge[1]} Q ${center[0]} ${center[1]} ${inedge[0]} ${inedge[1]}`
   }
   const righteyebrowposition = () => {
@@ -253,6 +258,69 @@ function FaceController(props){
           <span>上唇</span><input type="range" name="mouthup" min="-100" max="100" value="0" onChange={handleChange} />
           <span>下唇</span><input type="range" name="mouthlow" min="-100" max="100" value="0" onChange={handleChange} />
         </li>
+      </ul>
+    </div>
+  )
+}
+
+function FaceMover(props) {
+  const nod =  () => {
+    const v = 5
+    let count = 0
+    let mode = false //False:下がる, True:上がる
+    props.setFaceparameter(prev => ({...prev, irisarg:-90}))
+    const id = setInterval(() => {
+      props.setFaceparameter(prev => ({...prev, yturn:count/2, irisr:count/4}))
+      console.log(count)
+      if(mode){
+        count -= v
+      }
+      else{
+        count += v
+      }
+      if(mode && count <= 0){
+        clearInterval(id)
+      }
+      else if(count > 100){
+        mode = true
+      }
+    }, 10)
+  }
+  const shakehead = () => {
+    const v = 10
+    let count = props.faceparameter.xturn
+    let mode = false //False:右に振る, True:左に振る
+    props.setFaceparameter(prev => ({...prev, irisarg:180}))
+    const id = setInterval(() => {
+      props.setFaceparameter(prev => ({...prev, xturn:count/2, irisr:count/4}))
+      console.log(count)
+      if(mode){
+        count -= v
+      }
+      else{
+        count += v
+      }
+      if(!mode && count == 0){
+        clearInterval(id)
+      }
+      else if(count > 100){
+        mode = true
+      }
+      else if(count < -100){
+        mode = false
+      }
+    }, 10)
+  }
+  const move = () => {
+    nod()
+    shakehead()
+  }
+  return (
+    <div className='action-button'>
+      <ul>
+        <li>{props.faceparameter.yturn}<button type='button' onClick={nod}>nod</button></li>
+        <li>{props.faceparameter.xturn}<button type='button' onClick={shakehead}>shakehead</button></li>
+        <li>{props.faceparameter.yturn}<button type='button' onClick={move}>move</button></li>
       </ul>
     </div>
   )
