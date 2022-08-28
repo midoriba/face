@@ -18,7 +18,6 @@ function FaceContainer() {
     mouthlow:0,
   })
   // stateにパラメータを追加
-  console.log(faceparameter)
   
   const setfixedparameter = (name, value) => {
     setFaceparameter({ ...faceparameter, [name]: value })

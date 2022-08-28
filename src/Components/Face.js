@@ -159,8 +159,8 @@ function Face(props) {
     const maxtrans = 80
     let leftedge = [280, 550+maxtrans*edparam/100]
     let rightedge = [470, 550+maxtrans*edparam/100]
-    let lowright = [440, 600+maxtrans*lowparam/100]
-    let lowleft = [310, 600+maxtrans*lowparam/100]
+    let lowright = [440, 570+maxtrans*lowparam/100]
+    let lowleft = [310, 570+maxtrans*lowparam/100]
     let upright = [440, 570+maxtrans*upparam/100]
     let upleft = [310, 570+maxtrans*upparam/100]
     return `M ${leftedge[0]} ${leftedge[1]} C ${upleft[0]} ${upleft[1]} ${upright[0]} ${upright[1]} ${rightedge[0]} ${rightedge[1]} C ${lowright[0]} ${lowright[1]} ${lowleft[0]} ${lowleft[1]} ${leftedge[0]} ${leftedge[1]} z`
