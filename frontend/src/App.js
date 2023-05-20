@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import './App.css';
-import FaceContainer from './Components/FaceContainer'
+import FaceContainer from './Components/face/FaceContainer'
 
 function App() {
   return (
     <div className="App">
-      <FaceContainer />
+      <FaceContainer emotion={{r:1, arg:60}}/>
     </div>
   );
 }
