@@ -75,3 +75,20 @@ svg.moveface {
   stroke-width: 10px;
   fill: #d43991;
 }
+
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #333333;
+  text-align: left;
+  width:300px
+}
+
+.left-message{
+  margin: 0 auto 0 0;
+}
+
+.right-message{
+  margin: 0 0 0 auto;
+}
