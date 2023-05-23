@@ -3,18 +3,26 @@ import Message from "./Message";
 import axios from "axios"
 
 function Chat() {
+    const format_digit = (n) => {
+        if(n < 10){
+            return `0${n}`
+        }
+        else{
+            return `${n}`
+        }
+    }
     const getCurrentDatetime = () => {
         const current_datetime = new Date();
         const formatted_current_datetime =
             current_datetime.getFullYear() +
             "-" +
-            (current_datetime.getMonth() + 1) +
+            format_digit(current_datetime.getMonth() + 1) +
             "-" +
-            current_datetime.getDate() +
+            format_digit(current_datetime.getDate()) +
             " " +
-            current_datetime.getHours() +
+            format_digit(current_datetime.getHours()) +
             ":" +
-            current_datetime.getMinutes();
+            format_digit(current_datetime.getMinutes());
         return formatted_current_datetime;
     };
     const [chats, setChats] = useState([
