@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Message from "./Message";
-
+import axios from "axios"
 
 function Chat() {
     const getCurrentDatetime = () => {
@@ -38,6 +38,21 @@ function Chat() {
             datetime: getCurrentDatetime()
         }
         setChats([...chats, new_chat])
+        console.log('post')
+        axios.post('http://127.0.0.1:5000/api/sendchat', new_chat)
+            .then(res => {
+                const responsetext = res.data['text']
+                console.log(`>>>>>>responsetext: ${responsetext}`)
+                const agent_new_chat = {
+                    author: "agent",
+                    text: responsetext,
+                    datetime: getCurrentDatetime()
+                }
+                setChats([...chats, agent_new_chat])
+            })
+            .catch(res => {
+                console.log('>>>>>>failed')
+            })
     }
 
     const handleChangeChatInput = (e) => {
@@ -46,8 +61,6 @@ function Chat() {
 
     return (
         <div>
-            <p>{JSON.stringify(chats)}</p>
-            <p>{chatForm}</p>
             <div className="chat">
                 <h1>チャット</h1>
                 {chats.map((value) => <Message author={value.author} text={value.text} datetime={value.datetime} left={value.author==="agent" ? true : false}/>)}
