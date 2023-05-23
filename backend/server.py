@@ -6,7 +6,6 @@ app = Flask(__name__)
 @app.route('/sendchat', methods=['POST'])
 def send_chat():
     text = request.form.get('text')
-    print('>>>>>>>>>>>>text:', text)
     msg = [
         {"role": "user", "content": text}
     ]
