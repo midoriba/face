@@ -25,38 +25,29 @@ function Chat() {
             format_digit(current_datetime.getMinutes());
         return formatted_current_datetime;
     };
-    const [chats, setChats] = useState([
-        {
-            author: "agent",
-            text: "話しかけてください",
-            datetime: getCurrentDatetime()
-        },
-        {
-            author: "user",
-            text: "こんにちは",
-            datetime: getCurrentDatetime()
-        }
-    ]);
+    const [chats, setChats] = useState([]);
     const [chatForm, setChatForm] = useState("")
 
     const handleSubmit = () => {
-        const new_chat = {
+        const user_request = {
             author: "user",
-            text: chatForm,
+            content: chatForm,
             datetime: getCurrentDatetime()
         }
-        setChats([...chats, new_chat])
+        const new_chat = [...chats, user_request]
+        setChats(new_chat)
         console.log('post')
         axios.post('http://127.0.0.1:5000/api/sendchat', new_chat)
             .then(res => {
-                const responsetext = res.data['text']
-                console.log(`>>>>>>responsetext: ${responsetext}`)
-                const agent_new_chat = {
-                    author: "agent",
-                    text: responsetext,
+                const responsetext = res.data['content']
+                const emotion = res.data['emotion']
+                console.log(`>>>>>>responsecontent: ${responsetext} ${JSON.stringify(emotion)}`)
+                const assistant_response = {
+                    author: "assistant",
+                    content: responsetext,
                     datetime: getCurrentDatetime()
                 }
-                setChats([...chats, agent_new_chat])
+                setChats([...new_chat, assistant_response])
             })
             .catch(res => {
                 console.log('>>>>>>failed')
@@ -69,9 +60,10 @@ function Chat() {
 
     return (
         <div>
+            <p>{JSON.stringify(chats)}</p>
             <div className="chat">
                 <h1>チャット</h1>
-                {chats.map((value) => <Message author={value.author} text={value.text} datetime={value.datetime} left={value.author==="agent" ? true : false}/>)}
+                {chats.map((value) => <Message author={value.author} content={value.content} datetime={value.datetime} left={value.author==="assistant" ? true : false}/>)}
             </div>
             <div className="chat-form">
                 <label htmlFor="chat-input">チャット入力</label>
