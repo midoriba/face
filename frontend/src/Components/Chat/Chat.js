@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Message from "./Message";
 import axios from "axios"
 
-function Chat() {
+function Chat({setEmotion}) {
     const format_digit = (n) => {
         if(n < 10){
             return `0${n}`
@@ -45,9 +45,11 @@ function Chat() {
                 const assistant_response = {
                     author: "assistant",
                     content: responsetext,
-                    datetime: getCurrentDatetime()
-                }
+                    datetime: getCurrentDatetime()}
                 setChats([...new_chat, assistant_response])
+                const r = Math.sqrt((emotion.valence*emotion.valence) + (emotion.arousal*emotion.arousal))
+                const arg = Math.atan2(emotion.arousal, emotion.valence) * 180 / Math.PI
+                setEmotion({r:r, arg:arg})
             })
             .catch(res => {
                 console.log('>>>>>>failed')
@@ -59,9 +61,9 @@ function Chat() {
     }
 
     return (
-        <div>
+        <div className="chat">
             <p>{JSON.stringify(chats)}</p>
-            <div className="chat">
+            <div className="message-container">
                 <h1>チャット</h1>
                 {chats.map((value) => <Message author={value.author} content={value.content} datetime={value.datetime} left={value.author==="assistant" ? true : false}/>)}
             </div>

@@ -28,7 +28,7 @@ function FaceContainer({ move, emotion, canChangeEmotion = true }) {
     setFaceparameter({ ...faceparameter, [name]: faceparameter[name] + n });
   };
   return (
-    <div className="FaceContainer">
+    <div className="face-container">
       <Face faceparameter={faceparameter} />
       <FaceMover
         emotion={emotion}

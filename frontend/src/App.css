@@ -92,3 +92,12 @@ svg.moveface {
 .right-message{
   margin: 0 0 0 auto;
 }
+
+.chat-page{
+  display: flex;
+}
+
+.chat{
+  width: 50%;
+  margin: 10px 30px 10px 30px;
+}
