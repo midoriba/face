@@ -47,6 +47,7 @@ function Chat({setEmotion}) {
                     content: responsetext,
                     datetime: getCurrentDatetime()}
                 setChats([...new_chat, assistant_response])
+                setChatForm("")
                 const r = Math.sqrt((emotion.valence*emotion.valence) + (emotion.arousal*emotion.arousal))
                 const arg = Math.atan2(emotion.arousal, emotion.valence) * 180 / Math.PI
                 setEmotion({r:r, arg:arg})
@@ -62,7 +63,6 @@ function Chat({setEmotion}) {
 
     return (
         <div className="chat">
-            <p>{JSON.stringify(chats)}</p>
             <div className="message-container">
                 <h1>チャット</h1>
                 {chats.map((value) => <Message author={value.author} content={value.content} datetime={value.datetime} left={value.author==="assistant" ? true : false}/>)}
