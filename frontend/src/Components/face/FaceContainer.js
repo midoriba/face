@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import EmotionGraph from "./EmotionGraph";
 
 import Face from "./Face";
 import FaceMover from "./FaceMover";
@@ -37,6 +38,7 @@ function FaceContainer({ move, emotion, canChangeEmotion = true }) {
         setFaceparameter={setFaceparameter}
         canChangeEmotion={canChangeEmotion}
       />
+      <EmotionGraph emotion={emotion} />
     </div>
   );
 }
