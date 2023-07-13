@@ -44,11 +44,12 @@ def send_chat():
     return {"content":chat_response, "emotion":emotion, "audio":audio}
 
 def speak(text, speaker=1):
+    url = 'http://192.168.10.107:50021/'
     params = {'text':text, 'speaker':speaker}
-    response_query = rq.post('http://127.0.0.1:50021/audio_query', params=params)
+    response_query = rq.post(url+'audio_query', params=params)
     headers = {'Content-Type': 'application/json',}
     response_audio = rq.post(
-        f'http://127.0.0.1:50021/synthesis',
+        url+'synthesis',
         headers=headers,
         params=params,
         data=json.dumps(response_query.json())
