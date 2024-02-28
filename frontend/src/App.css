@@ -104,3 +104,14 @@ svg.moveface {
   margin: 0px 30px 0px 30px;
   padding: 10px 0 10px 0
 }
+
+.emotion-selector{
+  width: 600px;
+  height: 600px;
+  justify-content: center;
+  background-color: #ee9999
+}
+
+.emotion-display-text{
+  font-size: 20px;
+}

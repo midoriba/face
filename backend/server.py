@@ -24,3 +24,7 @@ async def send_chat(dialog_data: DialogData):
     response = dm.respond(dialog_data)
     return response
 
+@app.get('/api/start')
+async def start():
+    response = dm.start()
+    return response

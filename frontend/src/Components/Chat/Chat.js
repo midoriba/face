@@ -27,7 +27,15 @@ function Chat({setEmotion}) {
     };
     const [chats, setChats] = useState([]);
     const [chatForm, setChatForm] = useState("")
+    const [dialogId, setDialogId] = useState(null)
 
+    useEffect(() => {
+        axios.get('http://127.0.0.1:5000/api/start')
+        .then(res => {
+            setDialogId(res.data.id)
+        })
+    }, [])
+    
     const handleSubmit = () => {
         const user_request = {
             author: "user",

@@ -9,9 +9,11 @@ function FaceMover(props) {
       return;
     }
     const v = 1;
-    const radarg = (arg * Math.PI) / 180;
+    // const radarg = (arg * Math.PI) / 180;
+    const radarg = arg
     const x = r * Math.cos(radarg);
     const y = r * Math.sin(radarg);
+    console.log(`emot: ${x}, ${y}, ${arg} ${radarg}`)
     const eyelidwidth = () => {
       const ret = 100 + y * 50;
       if (ret > 100) {
