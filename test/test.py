@@ -3,7 +3,7 @@ import json
 import time
 
 #url = 'http://127.0.0.1:50021/'
-url = 'http://192.168.11.163:50021/'
+url = 'http://192.168.10.107:50021/'
 with open('test.txt', encoding='utf-8', mode='r') as f:
     text = f.read().replace('/n', '')
 print('text length:', len(text))

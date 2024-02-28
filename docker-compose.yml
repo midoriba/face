@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  api:
+    restart: always
+    hostname: api
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
